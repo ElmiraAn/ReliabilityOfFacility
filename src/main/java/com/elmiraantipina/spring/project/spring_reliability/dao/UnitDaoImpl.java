@@ -1,5 +1,6 @@
 package com.elmiraantipina.spring.project.spring_reliability.dao;
 
+import com.elmiraantipina.spring.project.spring_reliability.entity.Failure;
 import com.elmiraantipina.spring.project.spring_reliability.entity.Unit;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -37,6 +38,16 @@ public class UnitDaoImpl implements UnitDao{
     public Unit getUnit(int id) {
         Session session = sessionFactory.getCurrentSession();
         Unit unit = session.get(Unit.class,id);
+        /*List<Failure> allFails = session.createQuery("from Failure "+
+                        "where id_failure like id", Failure.class)
+                .getResultList();
+        unit.setFailures(allFails);*/
+        Query<Failure> query = session.createQuery("from Failure where id_unit=:unitId", Failure.class);
+
+        query.setParameter("unitId", id);
+
+        List<Failure> allFails = query.getResultList();
+        unit.setFailures(allFails);
         return unit;
     }
 
@@ -50,4 +61,5 @@ public class UnitDaoImpl implements UnitDao{
         query.executeUpdate();
 
     }
+
 }

@@ -2,6 +2,8 @@ package com.elmiraantipina.spring.project.spring_reliability.entity;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -19,6 +21,10 @@ public class Unit {
     @Column(name = "id_system")
     private int id_system;
 
+    @OneToMany(cascade = CascadeType.ALL
+            , mappedBy = "unit")
+    private List<Failure> failures;
+
     public Unit() {
     }
 
@@ -26,6 +32,14 @@ public class Unit {
         this.id = id;
         this.name = name;
         this.id_system = id_system;
+    }
+
+    public void addFailureToUnit(Failure failure){
+        if (failures==null) {
+            failures = new ArrayList<>();
+        }
+        failures.add(failure);
+        failure.setUnit(this);
     }
 
     public int getId() {
@@ -50,5 +64,22 @@ public class Unit {
 
     public void setId_system(int id_system) {
         this.id_system = id_system;
+    }
+
+    public List<Failure> getFailures() {
+        return failures;
+    }
+
+    public void setFailures(List<Failure> failures) {
+        this.failures = failures;
+    }
+
+    @Override
+    public String toString() {
+        return "Unit{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", id_system=" + id_system +
+                '}';
     }
 }
