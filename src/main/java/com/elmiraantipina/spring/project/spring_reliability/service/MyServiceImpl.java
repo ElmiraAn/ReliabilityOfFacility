@@ -41,6 +41,11 @@ public class MyServiceImpl implements MyService {
     }
 
     @Override
+    public void saveFails(Failure failure) {
+        failDao.saveFails(failure);
+    }
+
+    @Override
     @Transactional
     public Unit getUnit(int id) {
         return unitDao.getUnit(id);
@@ -48,8 +53,19 @@ public class MyServiceImpl implements MyService {
 
     @Override
     @Transactional
+    public Failure getFail(int id) {
+        return failDao.getFail(id);
+    }
+
+    @Override
+    @Transactional
     public void deleteUnit(int id) {
         unitDao.deleteUnit(id);
+    }
+
+    @Override
+    public void deleteFail(int id) {
+        failDao.deleteFail(id);
     }
 
 }

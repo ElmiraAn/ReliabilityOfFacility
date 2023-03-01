@@ -13,7 +13,13 @@ public interface MyService {
 
     public void saveUnit(Unit unit);
 
+    public void saveFails(Failure failure);
+
     public Unit getUnit(int id);
 
+    public Failure getFail(int id);
+
     public void deleteUnit(int id);
+
+    public void deleteFail(int id);
 }

@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Repository
-public class UnitDaoImpl implements UnitDao{
+public class UnitDaoImpl implements UnitDao {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -21,10 +21,10 @@ public class UnitDaoImpl implements UnitDao{
     @Override
     public List<Unit> getAllUnits() {
         Session session = sessionFactory.getCurrentSession();
-    List<Unit> allUnits = session.createQuery("from Unit", Unit.class)
-            .getResultList();
+        List<Unit> allUnits = session.createQuery("from Unit", Unit.class)
+                .getResultList();
 
-    return allUnits;
+        return allUnits;
     }
 
     @Override
@@ -37,16 +37,16 @@ public class UnitDaoImpl implements UnitDao{
     @Override
     public Unit getUnit(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Unit unit = session.get(Unit.class,id);
+        Unit unit = session.get(Unit.class, id);
         /*List<Failure> allFails = session.createQuery("from Failure "+
-                        "where id_failure like id", Failure.class)
+                        "where id_unit=:unitId", Failure.class)
                 .getResultList();
         unit.setFailures(allFails);*/
-        Query<Failure> query = session.createQuery("from Failure where id_unit=:unitId", Failure.class);
+        Query<Failure> query = session.createQuery("from Failure where id=:unitId");
 
         query.setParameter("unitId", id);
 
-        List<Failure> allFails = query.getResultList();
+        List<Failure> allFails = query.list();
         unit.setFailures(allFails);
         return unit;
     }
@@ -54,7 +54,7 @@ public class UnitDaoImpl implements UnitDao{
     @Override
     public void deleteUnit(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Query<Unit> query = session.createQuery("delete from Unit "+
+        Query<Unit> query = session.createQuery("delete from Unit " +
                 "where id=:unitId");
 
         query.setParameter("unitId", id);

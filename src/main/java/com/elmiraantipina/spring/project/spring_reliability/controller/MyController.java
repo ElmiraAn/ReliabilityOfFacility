@@ -34,12 +34,12 @@ public class MyController {
 
     @RequestMapping("/addNewUnit")
     public String addUnit(Model model){
-        Failure fail = new Failure();
+        //Failure fail = new Failure();
         Unit unit = new Unit();
 
-        unit.addFailureToUnit(fail);
+        //unit.addFailureToUnit(fail);
 
-        model.addAttribute("fail", fail);
+        //model.addAttribute("fail", fail);
         model.addAttribute("unit", unit);
         // для причины отказа
         //Failure fail = new Failure();
@@ -57,21 +57,41 @@ public class MyController {
         return "redirect:/";
     }
 
+    @RequestMapping("/saveFail")
+    public String saveFail(@RequestParam("failId") int id, Model model){
+        //Unit unit = unitService.getUnit(id);
+        Failure failure = unitService.getFail(id);
+        Unit unit = failure.getUnit();
+        unitService.saveFails(failure);
+        /*Unit unit = failure.getUnit();
+        unitService.saveUnit(unit);*/
+        return "redirect:/saveUnit";
+    }
+
     @RequestMapping("/updateInfo")
     public String updateUnit(@RequestParam("unitId") int id, Model model){
         Unit unit = unitService.getUnit(id);
-
-        //List<Failure> allFails = unitService.getAllFails(id);
-        //model.addAttribute("allFails", allFails);
         List<Failure> allFails = unit.getFailures();
-        model.addAttribute("allFails", allFails);
-
         model.addAttribute("unit", unit);
-        // для причины отказа
-        /*Failure fail = new Failure();
-        model.addAttribute("fail", fail);*/
+        model.addAttribute("allFail", allFails);
 
         return "unit-info";
+
+    }
+
+    @RequestMapping("/updateInfoFail")
+    public String updateFail(@RequestParam("failId") int id, Model model){
+        //Failure fail = unitService.getFail(id);
+        Unit unit = unitService.getUnit(id);
+        List<Failure> allFails = unit.getFailures();
+        model.addAttribute("unit", unit);
+        model.addAttribute("allFail", allFails);
+        /*Unit unit = unitService.getUnit(id);
+        List<Failure> allFails = unit.getFailures();
+        model.addAttribute("unit", unit);
+        model.addAttribute("allFail", allFails);*/
+
+        return "fail-info";
 
     }
 
@@ -79,6 +99,14 @@ public class MyController {
     public String deleteUnit(@RequestParam("unitId") int id){
 
         unitService.deleteUnit(id);
+
+        return "redirect:/";
+    }
+
+    @RequestMapping("/deleteFail")
+    public String deleteFail(@RequestParam("failId") int id){
+
+        unitService.deleteFail(id);
 
         return "redirect:/";
     }

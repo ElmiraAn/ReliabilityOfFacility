@@ -15,6 +15,9 @@
     </tr>
 
     <c:forEach var="unit" items="${allUni}">
+        <%--<c:url var="updateButton" value="//updateInfo">
+            <c:param name="unitId" value="${unit.id}"/>
+        </c:url> --%>
         <c:url var="updateButton" value="//updateInfo">
             <c:param name="unitId" value="${unit.id}"/>
         </c:url>

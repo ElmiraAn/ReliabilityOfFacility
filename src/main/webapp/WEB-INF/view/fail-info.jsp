@@ -5,11 +5,11 @@
 <html>
 <body>
 <br>
-<h2>Unit Info</h2>
+<h2>Failures Info</h2>
 <br>
 
 
-<form:form action="saveUnit" modelAttribute="unit">
+<%--<form:form action="saveUnit" modelAttribute="unit">
 
     <form:hidden path="id"/>
 
@@ -19,7 +19,7 @@
     <br><br>
     <input type="submit" value="OK">
 
-</form:form>
+</form:form> --%>
 
 
 <table>
@@ -32,13 +32,18 @@
 
     <c:forEach var="fail" items="${allFail}">
 
-        <c:url var="updateButtonFail" value="//updateInfoFail">
-            <c:param name="failId" value="${fail.id_failure}"/>
+        <%--<form:form action="saveFail" modelAttribute="fail">--%>
+        <c:url var="saveButtonFail" value="//saveFail">
+            <%--<c:param name="unitId" value="${unit.id}"/>--%>
+              <c:param name="failId" value="${fail.id_failure}"/>
         </c:url>
+        <%--<c:url var="updateButtonFail" value="//updateInfoFail">
+            <c:param name="failId" value="${fail.id_failure}"/>
+        </c:url> --%>
 
-        <c:url var="deleteButtonFail" value="//deleteFail">
+        <%-- <c:url var="deleteButtonFail" value="//deleteFail">
             <c:param name="failId" value="${fail.id_failure}"/>
-        </c:url>
+        </c:url> --%>
 
         <tr>
             <td>${fail.name}</td>
@@ -46,16 +51,14 @@
             <td>${fail.loss_of_power}</td>
 
             <td>
-                <input type="button" value="Update"
-                       onclick="window.location.href='${updateButtonFail}'"/>
-
-                <input type="button" value="Delete"
-                       onclick="window.location.href='${deleteButtonFail}'"/>
+                <input type="button" value="OK fail"
+                       onclick="window.location.href='${saveButtonFail}'"/>
+                    <%-- <input type="submit" value="OK">--%>
             </td>
 
         </tr>
-
-    </c:forEach>
+        <%--</form:form>--%>
+</c:forEach>
 </table>
 
 </body>
